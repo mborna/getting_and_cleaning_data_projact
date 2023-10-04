@@ -1,18 +1,18 @@
-# getting_and_cleaning_data_projact
-Getting and Cleaning Data Course Project
+***getting_and_cleaning_data_projact***
+**Getting and Cleaning Data Course Project**
 #Preparation
 library(dplyr)
 
 
-#Download the dataset
+*Download the dataset*
 
 fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
   download.file(fileURL, filename)
 
-#unzip dataset
+**unzip dataset**
 unzip(filename) 
 
-#Assigning all data frames to proper objexts
+**Assigning all data frames to proper objexts**
 
 
 features <- read.table("UCI HAR Dataset/features.txt", col.names = c("n","functions"))
@@ -25,23 +25,23 @@ x_train <- read.table("UCI HAR Dataset/train/X_train.txt", col.names = features$
 y_train <- read.table("UCI HAR Dataset/train/y_train.txt", col.names = "code")
 
 
-#Step 1: Merges the training and the test sets to create one data set.
+**Step 1: Merges the training and the test sets to create one data set.**
 X <- rbind(x_train, x_test)
 Y <- rbind(y_train, y_test)
 Subject <- rbind(subject_train, subject_test)
 Merged_Data <- cbind(Subject, Y, X)
 
 
-#Step 2: Extracts only the measurements on the mean and standard deviation for each measurement.
+**Step 2: Extracts only the measurements on the mean and standard deviation for each measurement.**
 
 TidyData <- Merged_Data %>% select(subject, code, contains("mean"), contains("std"))
 
 
-#Step 3: Uses descriptive activity names to name the activities in the data set.
+**Step 3: Uses descriptive activity names to name the activities in the data set.**
 
 TidyData$code <- activities[TidyData$code, 2]
 
-# Step 4:labels the data set with descriptive variable names Appropriately.
+**Step 4:labels the data set with descriptive variable names Appropriately.**
 
 names(TidyData)[2] = "activity"
 names(TidyData)<-gsub("Acc", "Accelerometer", names(TidyData))
@@ -58,9 +58,8 @@ names(TidyData)<-gsub("angle", "Angle", names(TidyData))
 names(TidyData)<-gsub("gravity", "Gravity", names(TidyData))
 
 
-#Step 5: From the data set in step 4
-#creates a second, independent tidy data set 
-#with the average of each variable for each activity and each subject.
+**Step 5: From the data set in step 4**
+*creates a second, independent tidy data set with the average of each variable for each activity and each subject.*
 
 
 FinalData <- TidyData %>%
@@ -68,21 +67,11 @@ FinalData <- TidyData %>%
     summarise_all(funs(mean))
 write.table(FinalData, "FinalData.txt", row.name=FALSE)
 
-#Checking variable names
+**Checking variable names**
 
 str(FinalData)
 
 
-#Take a look at final data
+**Take a look at final data**
 
 FinalData
-
-
-
-
-
-#Step 1: Merges the training and the test sets to create one data set.
-X <- rbind(x_train, x_test)
-Y <- rbind(y_train, y_test)
-Subject <- rbind(subject_train, subject_test)
-Merged_Data <- cbind(Subject, Y, X)
