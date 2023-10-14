@@ -3,8 +3,8 @@ Getting and Cleaning Data Course Project
 
 * This is the course project for the Getting and Cleaning Data week 4.
 * this repo The included 
-* markdown `file codebook.md` 
-* R script  `run_analysis.R 
+* markdown file `codebook.md` 
+* R script  `run_analysis.R` 
 * FinalTidyData  `tidtdata.txt` 
 
  # the step for this assignment are as follow
